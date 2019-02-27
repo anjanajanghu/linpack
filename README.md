@@ -4,7 +4,7 @@ This repository contains an implementation of the Linpack benchmark obtained fro
 
 To run the benchmark:
 
-- `sudo docker run -it --rm elreyes/linpack`
+- `sudo docker run -it --rm h20180061/linpack`
 
 The benchmark results will be printed on the console.
 
@@ -31,7 +31,7 @@ Average rolled and unrolled performance:
 
 It is possible to customize the array size used by the benchmark code (size is 200 by default). To do this, set an environment variable when running the container:
 
-`sudo docker run -it --rm -e LINPACK_ARRAY_SIZE=600 elreyes/linpack`
+`sudo docker run -it --rm -e LINPACK_ARRAY_SIZE=600 h20180061/linpack`
 
 ### Building the Image Locally
 
