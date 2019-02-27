@@ -93,7 +93,8 @@ int main(void)
             printf("Not enough memory available for given array size.\n\n");
             return 2;
             }
-        printf("\n\nLINPACK benchmark, %s precision.\n",PREC);
+
+        printf("\n\nLINPACK benchmark, %s precision. The result would be written to log.txt in work directory\n",PREC);
         printf("Machine precision:  %d digits.\n",BASE10DIG);
         printf("Array size %d X %d.\n",arsize,arsize);
         printf("Average rolled and unrolled performance:\n\n");
@@ -102,7 +103,7 @@ int main(void)
         nreps=1;
 
         FILE *fd;
-        fd = fopen("/var/log/linpack/log.txt", "w");
+        fd = fopen("log.txt", "w");
         fprintf(fd,"\n\nLINPACK benchmark, %s precision.\n",PREC);
         fprintf(fd,"Machine precision:  %d digits.\n",BASE10DIG);
         fprintf(fd,"Array size %d X %d.\n",arsize,arsize);
