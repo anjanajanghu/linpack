@@ -11,7 +11,7 @@ The benchmark results will be printed on the console.
 Here are some sample results from my system with the default array size of 200:
 
 ```
-$ sudo docker run -it --rm elreyes/linpack
+$ sudo docker run -it --rm h20180061/linpack
 Memory required:  315K.
 
 
@@ -38,7 +38,7 @@ It is possible to customize the array size used by the benchmark code (size is 2
 Alterntively, you can clone this repository and build your own Docker image locally from scratch. To do so, follow these steps:
 
 - Clone this repository (requires git to be installed in your system... Google for your particular OS/distro)
-  - `git clone https://github.com/ereyes01/linpack.git`
+  - `git clone https://github.com/gokusayon/linpack.git`
 
 - Build the Docker image
   - `cd linpack`
