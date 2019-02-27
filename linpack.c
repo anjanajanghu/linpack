@@ -48,7 +48,7 @@ typedef float   REAL;
 typedef double  REAL;
 #endif
 
-static REAL linpack  (long nreps,int arsize,FILE * fd);
+static REAL linpack  (long nreps,int arsize);
 static void matgen   (REAL *a,int lda,int n,REAL *b,REAL *norma);
 static void dgefa    (REAL *a,int lda,int n,int *ipvt,int *info,int roll);
 static void dgesl    (REAL *a,int lda,int n,int *ipvt,REAL *b,int job,int roll);
@@ -62,6 +62,7 @@ static int  idamax   (int n,REAL *dx,int incx);
 static REAL second   (void);
 
 static void *mempool;
+
 
 int main(void)
 {
@@ -86,26 +87,25 @@ int main(void)
             }
         arsize2d = (long)arsize*(long)arsize;
         memreq=arsize2d*sizeof(REAL)+(long)arsize*sizeof(REAL)+(long)arsize*sizeof(int);
+        
+
         //printf("Memory required:  %ldK.\n",(memreq+512L)>>10);
         fprintf(stdout,"Memory required:  %ldK.\n",(memreq+512L)>>10);
+       
+
         malloc_arg=(size_t)memreq;
         if (malloc_arg!=memreq || (mempool=malloc(malloc_arg))==NULL)
             {
             printf("Not enough memory available for given array size.\n\n");
             return 2;
-            }/*
-        printf("\n\nLINPACK benchmark, %s precision.\n",PREC);
+            }
+       /* printf("\n\nLINPACK benchmark, %s precision.\n",PREC);
         printf("Machine precision:  %d digits.\n",BASE10DIG);
         printf("Array size %d X %d.\n",arsize,arsize);
         printf("Average rolled and unrolled performance:\n\n");
         printf("    Reps Time(s) DGEFA   DGESL  OVERHEAD    KFLOPS\n");
-        printf("----------------------------------------------------\n");*/
-
-
-        nreps=1;
-
-        FILE *fd;
-        //fd = fopen("log.txt", "w");
+        printf("----------------------------------------------------\n");
+        */
         fprintf(stdout,"\n\nLINPACK benchmark, %s precision.\n",PREC);
         fprintf(stdout,"Machine precision:  %d digits.\n",BASE10DIG);
         fprintf(stdout,"Array size %d X %d.\n",arsize,arsize);
@@ -113,19 +113,15 @@ int main(void)
         fprintf(stdout,"    Reps Time(s) DGEFA   DGESL  OVERHEAD    KFLOPS\n");
         fprintf(stdout,"----------------------------------------------------\n");
 
-
-
-
-        while (linpack(nreps,arsize,fd)<10.)
+        nreps=1;
+        while (linpack(nreps,arsize)<10.)
             nreps*=2;
         free(mempool);
-
-        fclose(fd);
         printf("\n");
 }
 
 
-static REAL linpack(long nreps,int arsize, FILE * fd)
+static REAL linpack(long nreps,int arsize)
 
     {
     REAL  *a,*b;
@@ -143,7 +139,7 @@ static REAL linpack(long nreps,int arsize, FILE * fd)
     tdgesl=0;
     tdgefa=0;
     totalt=second();
-  /*  for (i=0;i<nreps;i++)
+    for (i=0;i<nreps;i++)
         {
         matgen(a,lda,n,b,&norma);
         t1 = second();
@@ -153,7 +149,7 @@ static REAL linpack(long nreps,int arsize, FILE * fd)
         dgesl(a,lda,n,ipvt,b,0,1);
         tdgesl += second()-t1;
         }
-    */for (i=0;i<nreps;i++)
+    for (i=0;i<nreps;i++)
         {
         matgen(a,lda,n,b,&norma);
         t1 = second();
@@ -174,16 +170,14 @@ static REAL linpack(long nreps,int arsize, FILE * fd)
         tdgesl=0.;
     if (toverhead<0.)
         toverhead=0.;
-   /* printf("%8ld %6.2f %6.2f%% %6.2f%% %6.2f%%  %9.3f\n",
+    /*printf("%8ld %6.2f %6.2f%% %6.2f%% %6.2f%%  %9.3f\n",
             nreps,totalt,100.*tdgefa/totalt,
             100.*tdgesl/totalt,100.*toverhead/totalt,
             kflops);*/
-
     fprintf(stdout,"%8ld %6.2f %6.2f%% %6.2f%% %6.2f%%  %9.3f\n",
             nreps,totalt,100.*tdgefa/totalt,
             100.*tdgesl/totalt,100.*toverhead/totalt,
             kflops);
-
     return(totalt);
     }
 
