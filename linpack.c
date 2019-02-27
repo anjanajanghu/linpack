@@ -48,7 +48,7 @@ typedef float   REAL;
 typedef double  REAL;
 #endif
 
-static REAL linpack  (long nreps,int arsize);
+static REAL linpack  (long nreps,int arsize,FILE * fd);
 static void matgen   (REAL *a,int lda,int n,REAL *b,REAL *norma);
 static void dgefa    (REAL *a,int lda,int n,int *ipvt,int *info,int roll);
 static void dgesl    (REAL *a,int lda,int n,int *ipvt,REAL *b,int job,int roll);
@@ -62,7 +62,6 @@ static int  idamax   (int n,REAL *dx,int incx);
 static REAL second   (void);
 
 static void *mempool;
-
 
 int main(void)
 {
@@ -101,14 +100,29 @@ int main(void)
         printf("    Reps Time(s) DGEFA   DGESL  OVERHEAD    KFLOPS\n");
         printf("----------------------------------------------------\n");
         nreps=1;
-        while (linpack(nreps,arsize)<10.)
+
+        FILE *fd;
+        fd = fopen("/home/opc/Output.txt", "w");
+        fprintf(fd,"\n\nLINPACK benchmark, %s precision.\n",PREC);
+        fprintf(fd,"Machine precision:  %d digits.\n",BASE10DIG);
+        fprintf(fd,"Array size %d X %d.\n",arsize,arsize);
+        fprintf(fd,"Average rolled and unrolled performance:\n\n");
+        fprintf(fd,"    Reps Time(s) DGEFA   DGESL  OVERHEAD    KFLOPS\n");
+        fprintf(fd,"----------------------------------------------------\n");
+
+
+
+
+        while (linpack(nreps,arsize,fd)<10.)
             nreps*=2;
         free(mempool);
+
+        fclose(fd);
         printf("\n");
 }
 
 
-static REAL linpack(long nreps,int arsize)
+static REAL linpack(long nreps,int arsize, FILE * fd)
 
     {
     REAL  *a,*b;
@@ -161,6 +175,12 @@ static REAL linpack(long nreps,int arsize)
             nreps,totalt,100.*tdgefa/totalt,
             100.*tdgesl/totalt,100.*toverhead/totalt,
             kflops);
+
+    fprintf(fd,"%8ld %6.2f %6.2f%% %6.2f%% %6.2f%%  %9.3f\n",
+            nreps,totalt,100.*tdgefa/totalt,
+            100.*tdgesl/totalt,100.*toverhead/totalt,
+            kflops);
+
     return(totalt);
     }
 
