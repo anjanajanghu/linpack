@@ -104,8 +104,8 @@ int main(void)
 
         nreps=1;
 
-        //FILE *fd;
-        fd = fopen("log.txt", "w");
+        FILE *fd;
+        //fd = fopen("log.txt", "w");
         fprintf(stdout,"\n\nLINPACK benchmark, %s precision.\n",PREC);
         fprintf(stdout,"Machine precision:  %d digits.\n",BASE10DIG);
         fprintf(stdout,"Array size %d X %d.\n",arsize,arsize);
