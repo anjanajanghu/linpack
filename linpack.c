@@ -143,7 +143,7 @@ static REAL linpack(long nreps,int arsize, FILE * fd)
     tdgesl=0;
     tdgefa=0;
     totalt=second();
-    for (i=0;i<nreps;i++)
+  /*  for (i=0;i<nreps;i++)
         {
         matgen(a,lda,n,b,&norma);
         t1 = second();
@@ -153,7 +153,7 @@ static REAL linpack(long nreps,int arsize, FILE * fd)
         dgesl(a,lda,n,ipvt,b,0,1);
         tdgesl += second()-t1;
         }
-    for (i=0;i<nreps;i++)
+    */for (i=0;i<nreps;i++)
         {
         matgen(a,lda,n,b,&norma);
         t1 = second();
