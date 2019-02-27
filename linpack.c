@@ -102,7 +102,7 @@ int main(void)
         nreps=1;
 
         FILE *fd;
-        fd = fopen("/home/opc/Output.txt", "w");
+        fd = fopen("/var/log/linpack/log.txt", "w");
         fprintf(fd,"\n\nLINPACK benchmark, %s precision.\n",PREC);
         fprintf(fd,"Machine precision:  %d digits.\n",BASE10DIG);
         fprintf(fd,"Array size %d X %d.\n",arsize,arsize);
