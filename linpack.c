@@ -107,7 +107,7 @@ int main(void)
         printf("----------------------------------------------------\n");
         */
         FILE * fPtr;
-        fPtr = fopen("file1.txt", "a");
+        fPtr = fopen("/root/result/file1.txt", "a");
         if(fPtr == NULL)
         {
             fprintf(stdout,"Unable to create file.\n");
