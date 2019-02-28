@@ -106,6 +106,16 @@ int main(void)
         printf("    Reps Time(s) DGEFA   DGESL  OVERHEAD    KFLOPS\n");
         printf("----------------------------------------------------\n");
         */
+        FILE * fPtr;
+        fPtr = fopen("file1.txt", "a");
+        if(fPtr == NULL)
+        {
+            fprintf(stdout,"Unable to create file.\n");
+        } else {
+            fprintf(fPtr,"\n\nLINPACK benchmark, %s precision.\n",PREC); 
+            fclose(fPtr);
+        }
+    
         fprintf(stdout,"\n\nLINPACK benchmark, %s precision.\n",PREC);
         fprintf(stdout,"Machine precision:  %d digits.\n",BASE10DIG);
         fprintf(stdout,"Array size %d X %d.\n",arsize,arsize);
